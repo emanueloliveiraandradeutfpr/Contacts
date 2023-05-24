@@ -77,6 +77,7 @@ function addContacts() {
         li.querySelector("#numberContact").textContent = numberContact;
 
         add.appendChild(li);
+        form.reset();
         form.classList.toggle("visible");
     };
     contacts = document.querySelectorAll(".list-wrapper li");
