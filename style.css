@@ -65,6 +65,10 @@ form {
     margin-top: 24px;
 }
 
+.visible {
+    display: none;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;

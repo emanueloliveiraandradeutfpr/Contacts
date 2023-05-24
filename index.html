@@ -17,6 +17,17 @@
                 <li id="add">
                     <ion-icon name="add"></ion-icon>
                 </li>
+                <form class="addContact visible">
+                    <input type="file" id="fotoContact" accept="image/*">
+                    <input type="radio" id="homem" value="Homem" name="gender" checked>
+                    <label for="homem">Homem</label>
+                    <input type="radio" id="mulher" value="Mulher" name="gender">
+                    <label for="mulher">Mulher</label>
+                    <input type="text" id="nomeContact" required>
+                    <input type="text" id="dddContact" maxlength="2" required>
+                    <input type="tel" id="numContact" maxlength="9" required>
+                    <button>Adicionar</button>
+                </form>
                 <li id="pencil">
                     <ion-icon name="pencil"></ion-icon>
                 </li>
@@ -45,7 +56,8 @@
                 <ul>
                     <li>
                         <div class="person flex">
-                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="foto do contato">
+                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="foto do contato" width="100%"
+                                height="100%">
                             <div class="contact">
                                 <h3>Abraão</h3>
                                 <p>(<span id="ddd">11</span>) <span id="numberContact">9 0876-1234</span></p>

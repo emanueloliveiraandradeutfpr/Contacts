@@ -49,31 +49,38 @@ function renderListContacts() {
         }
     }
 }
-
 adicionar.addEventListener("click", addContacts);
 function addContacts() {
     const li = document.querySelector(".list-wrapper li").cloneNode(true);
     const add = document.querySelector(".list-wrapper ul");
+    const form = document.querySelector(".addContact");
 
-    let foto = (Math.random() * 100).toFixed(0);
-    let nome = "Emanuel";
-    let ddd = "42";
-    let numberContact = "9 9647-4730";
+    form.classList.toggle("visible");
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        let nome = document.querySelector("#nomeContact").value;
+        let ddd = document.querySelector("#dddContact").value;
+        let numberContact = document.querySelector("#numContact").value;
+        let img = li.querySelector("img");
+        let file = event.target[0].files[0];
+        let ramdom = (Math.random() * 100).toFixed(0);
 
-    li.querySelector("h3").textContent = nome;
-    li.querySelector("#ddd").textContent = ddd;
-    li.querySelector("#numberContact").textContent = numberContact;
-    li.querySelector(
-        "img",
-    ).src = `https://randomuser.me/api/portraits/men/${foto}.jpg`;
+        const gender = e.currentTarget[1].checked ? "men" : "women";
+        console.log(gender);
 
-    add.appendChild(li);
+        file
+            ? createFileReader(img, file)
+            : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
+
+        li.querySelector("h3").textContent = nome;
+        li.querySelector("#ddd").textContent = ddd;
+        li.querySelector("#numberContact").textContent = numberContact;
+
+        add.appendChild(li);
+        form.classList.toggle("visible");
+    };
     contacts = document.querySelectorAll(".list-wrapper li");
 }
-
-editar.onclick = function editContacts() {
-    console.log("Oi");
-};
 
 deletar.onclick = deleteContacts;
 
@@ -83,16 +90,45 @@ function deleteContacts() {
     }
 }
 
-function removeListener(funcao) {
-    for (const index of contacts) {
-        index.removeEventListener("click", funcao, false);
-    }
-}
-let deleta = function () {
+function deleta() {
     if (confirm("Gostaria de deletar este contato?")) {
         event.currentTarget.remove();
         removeListener(deleta);
         renderListContacts();
         contacts = document.querySelectorAll(".list-wrapper li");
     }
-};
+}
+
+editar.onclick = editContacts;
+function editContacts() {
+    for (const i of contacts) {
+        i.addEventListener("click", edit);
+    }
+}
+
+function edit() {
+    if (event.target.contentEditable === "inherit") {
+        event.target.contentEditable = true;
+    }
+    event.target.addEventListener("focusout", () => {
+        event.target.contentEditable = "inherit";
+    });
+
+    removeListener(edit);
+}
+
+function removeListener(funcao) {
+    for (const index of contacts) {
+        index.removeEventListener("click", funcao, false);
+    }
+}
+
+function createFileReader(img, file) {
+    const reader = new FileReader();
+
+    reader.addEventListener("load", (ev) => {
+        const readerTarget = ev.target;
+        img.src = readerTarget.result;
+    });
+    reader.readAsDataURL(file);
+}
