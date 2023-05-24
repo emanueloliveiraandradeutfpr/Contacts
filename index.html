@@ -23,9 +23,10 @@
                     <label for="homem">Homem</label>
                     <input type="radio" id="mulher" value="Mulher" name="gender">
                     <label for="mulher">Mulher</label>
-                    <input type="text" id="nomeContact" required>
-                    <input type="tel" id="dddContact" maxlength="2" required>
-                    <input type="tel" id="numContact" maxlength="9" required>
+                    <input type="text" id="nomeContact" placeholder="Nome do contato" autocomplete="off" required>
+                    <input type="tel" id="dddContact" placeholder="DDD" maxlength="2" autocomplete="off" required>
+                    <input type="tel" id="numContact" placeholder="Número de telefone" maxlength="11" autocomplete="off"
+                        required>
                     <button>Adicionar</button>
                 </form>
                 <li id="pencil">
@@ -56,11 +57,10 @@
                 <ul>
                     <li>
                         <div class="person flex">
-                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="foto do contato" width="100%"
-                                height="100%">
+                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="foto do contato">
                             <div class="contact">
                                 <h3>Abraão</h3>
-                                <p>(<span id="ddd">11</span>) <span id="numberContact">9 0876-1234</span></p>
+                                <p>(<span id="ddd">11</span>) <span id="numberContact">90876-1234</span></p>
                             </div>
                         </div>
                     </li>
@@ -147,6 +147,8 @@
     <script src="main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/imask"></script>
+    <script src="mask.js"></script>
 </body>
 
 </html>

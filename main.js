@@ -1,6 +1,7 @@
 const filter = document.querySelector(".input-wrapper input");
 const letters = document.querySelectorAll(".list-wrapper");
 let contacts = document.querySelectorAll(".list-wrapper li");
+const form = document.querySelector(".addContact");
 
 const adicionar = document.querySelector("#add");
 const editar = document.querySelector("#pencil");
@@ -53,7 +54,6 @@ adicionar.addEventListener("click", addContacts);
 function addContacts() {
     const li = document.querySelector(".list-wrapper li").cloneNode(true);
     const add = document.querySelector(".list-wrapper ul");
-    const form = document.querySelector(".addContact");
 
     form.classList.toggle("visible");
     form.onsubmit = (e) => {
@@ -66,21 +66,24 @@ function addContacts() {
         let ramdom = (Math.random() * 100).toFixed(0);
 
         const gender = e.currentTarget[1].checked ? "men" : "women";
-        console.log(gender);
 
         file
             ? createFileReader(img, file)
             : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
 
-        li.querySelector("h3").textContent = nome;
+        if (nome != "") {
+            li.querySelector("h3").textContent = nome;
+        }
+
         li.querySelector("#ddd").textContent = ddd;
+
         li.querySelector("#numberContact").textContent = numberContact;
 
-        add.appendChild(li);
         form.reset();
+        add.appendChild(li);
         form.classList.toggle("visible");
+        contacts = document.querySelectorAll(".list-wrapper li");
     };
-    contacts = document.querySelectorAll(".list-wrapper li");
 }
 
 deletar.onclick = deleteContacts;
