@@ -36,7 +36,7 @@ header {
 .container-form {
     position: absolute;
     width: 350px;
-    height: 220px;
+    height: 250px;
     transform: translate(-246px, 68%);
     background-color: #24243D;
     border-radius: 10px;
@@ -283,4 +283,25 @@ header form,
     max-width: 350px;
     width: 100%;
     margin-inline: auto;
+}
+
+
+
+
+@media (max-width: 374px) {
+    .container-form {
+        transform: translate(-205px, 65%);
+    }
+}
+
+@media (max-width: 400px) {
+    .container-form {
+        transform: translate(-216px, 65%);
+    }
+}
+
+@media (max-width: 415px) {
+    .container-form {
+        transform: translate(-230px, 60%);
+    }
 }
