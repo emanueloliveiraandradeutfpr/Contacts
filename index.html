@@ -17,18 +17,29 @@
                 <li id="add">
                     <ion-icon name="add"></ion-icon>
                 </li>
-                <form class="addContact visible">
-                    <input type="file" id="fotoContact" accept="image/*">
-                    <input type="radio" id="homem" value="Homem" name="gender" checked>
-                    <label for="homem">Homem</label>
-                    <input type="radio" id="mulher" value="Mulher" name="gender">
-                    <label for="mulher">Mulher</label>
-                    <input type="text" id="nomeContact" placeholder="Nome do contato" autocomplete="off" required>
-                    <input type="tel" id="dddContact" placeholder="DDD" maxlength="2" autocomplete="off" required>
-                    <input type="tel" id="numContact" placeholder="Número de telefone" maxlength="11" autocomplete="off"
-                        required>
-                    <button>Adicionar</button>
-                </form>
+                <div class="container-form visible">
+                    <form class="addContact ">
+                        <input type="file" id="fotoContact" accept="image/*">
+                        <div class="gender flex">
+                            <input type="radio" id="homem" value="Homem" name="gender" checked>
+                            <label for="homem">Homem</label>
+                            <input type="radio" id="mulher" value="Mulher" name="gender">
+                            <label for="mulher">Mulher</label>
+                        </div>
+                        <input type="text" id="nomeContact" placeholder="Nome do contato" autocomplete="off" required>
+
+                        <div class="foneInfo flex">
+                            <input type="tel" id="dddContact" placeholder="DDD" maxlength="2" autocomplete="off"
+                                required>
+                            <input type="tel" id="numContact" placeholder="Número de telefone" maxlength="11"
+                                autocomplete="off"
+                                required>
+                        </div>
+
+                        <button>Adicionar</button>
+                    </form>
+                </div>
+
                 <li id="pencil">
                     <ion-icon name="pencil"></ion-icon>
                 </li>

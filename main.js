@@ -1,6 +1,7 @@
 const filter = document.querySelector(".input-wrapper input");
 const letters = document.querySelectorAll(".list-wrapper");
 let contacts = document.querySelectorAll(".list-wrapper li");
+const containerForm = document.querySelector(".container-form");
 const form = document.querySelector(".addContact");
 
 const adicionar = document.querySelector("#add");
@@ -25,9 +26,7 @@ function filterContacts() {
         for (let contact of contacts) {
             contact.style.display = "flex";
         }
-        for (const letter of letters) {
-            letter.style.display = "flex";
-        }
+        renderListContacts();
     }
     contacts = document.querySelectorAll(".list-wrapper li");
 }
@@ -55,7 +54,7 @@ function addContacts() {
     const li = document.querySelector(".list-wrapper li").cloneNode(true);
     const add = document.querySelector(".list-wrapper ul");
 
-    form.classList.toggle("visible");
+    containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
         e.preventDefault();
         let nome = document.querySelector("#nomeContact").value;
@@ -81,7 +80,7 @@ function addContacts() {
 
         form.reset();
         add.appendChild(li);
-        form.classList.toggle("visible");
+        containerForm.classList.toggle("visible");
         contacts = document.querySelectorAll(".list-wrapper li");
     };
 }

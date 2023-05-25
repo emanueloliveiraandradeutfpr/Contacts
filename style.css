@@ -30,6 +30,56 @@ body {
 
 header {
     background-color: #16151E;
+
+}
+
+.container-form {
+    position: absolute;
+    width: 350px;
+    height: 220px;
+    transform: translate(-246px, 68%);
+    background-color: #24243D;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.addContact {
+    width: 320px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    contain: content;
+}
+
+.addContact input {
+    border-radius: 10px;
+    height: 25px;
+    text-align: center;
+}
+
+.foneInfo {
+    gap: 17px;
+    justify-content: space-around;
+}
+
+.foneInfo :nth-child(1) {
+    width: 40px;
+}
+
+
+.addContact ::placeholder {
+    text-align: center;
+}
+
+.gender {
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.addContact button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #8C9CBA;
 }
 
 .flex {
@@ -38,6 +88,7 @@ header {
 
 .container {
     padding: 40px;
+    position: relative;
 }
 
 .itens-center {
