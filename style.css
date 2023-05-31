@@ -37,7 +37,7 @@ header {
     position: absolute;
     width: 350px;
     height: 250px;
-    transform: translate(-246px, 68%);
+    transform: translate(-246px, 60%);
     background-color: #24243D;
     border-radius: 10px;
     z-index: 1;
@@ -80,6 +80,10 @@ header {
     padding: 10px;
     border-radius: 10px;
     background-color: #8C9CBA;
+}
+
+.addContact button:hover {
+    background-color: #E1E1E6
 }
 
 .flex {
@@ -285,23 +289,20 @@ header form,
     margin-inline: auto;
 }
 
-
-
-
-@media (max-width: 374px) {
+@media (max-width: 415px) {
     .container-form {
-        transform: translate(-205px, 65%);
+        transform: translate(-230px, 60%);
     }
 }
 
 @media (max-width: 400px) {
     .container-form {
-        transform: translate(-216px, 65%);
+        transform: translate(-216px, 60%);
     }
 }
 
-@media (max-width: 415px) {
+@media (max-width: 360px) {
     .container-form {
-        transform: translate(-230px, 60%);
+        transform: translate(-205px, 60%);
     }
 }
