@@ -57,16 +57,6 @@ header {
     text-align: center;
 }
 
-.foneInfo {
-    gap: 17px;
-    justify-content: space-around;
-}
-
-.foneInfo :nth-child(1) {
-    width: 40px;
-}
-
-
 .addContact ::placeholder {
     text-align: center;
 }

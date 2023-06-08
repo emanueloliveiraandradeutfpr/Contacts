@@ -34,14 +34,9 @@
                         </div>
                         <input type="text" id="nomeContact" placeholder="Nome do contato" autocomplete="off" autofocus
                             required>
-
-                        <div class="foneInfo flex">
-                            <input type="tel" id="dddContact" placeholder="DDD" maxlength="2" autocomplete="off"
-                                required>
-                            <input type="tel" id="numContact" placeholder="Número de telefone" maxlength="11"
-                                autocomplete="off"
-                                required>
-                        </div>
+                        <input type="tel" id="numContact" placeholder="Número de telefone" maxlength="15"
+                            autocomplete="off"
+                            required>
 
                         <button>Adicionar</button>
                     </form>
@@ -78,7 +73,7 @@
                             <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="foto do contato">
                             <div class="contact">
                                 <h3 id="nameContact">Abraão</h3>
-                                <p>(<span id="ddd">11</span>) <span id="numberContact">90876-1234</span></p>
+                                <p id="numberContact">(11) 90876-1234</p>
                             </div>
                         </div>
                     </li>
