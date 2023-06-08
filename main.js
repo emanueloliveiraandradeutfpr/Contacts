@@ -12,16 +12,22 @@ filter.addEventListener("keyup", filterContacts);
 function filterContacts() {
     if (filter.value !== "") {
         for (let contact of contacts) {
-            let keySearch = contact.querySelector("h3");
-            keySearch = keySearch.textContent.toLowerCase();
+            let keySearchByName = contact.querySelector("h3");
+            keySearchByName = keySearchByName.textContent.toLowerCase();
+            let keySearchByNumber = contact.querySelector("p");
+            keySearchByNumber = keySearchByNumber.textContent.toLowerCase();
+
             let filterText = filter.value.toLowerCase().trim();
-            if (!keySearch.includes(filterText)) {
+            if (
+                !keySearchByName.includes(filterText) &&
+                !keySearchByNumber.includes(filterText)
+            ) {
                 contact.style.display = "none";
             } else {
                 contact.style.display = "flex";
             }
-            renderListContacts();
         }
+        renderListContacts();
     } else {
         for (let contact of contacts) {
             contact.style.display = "flex";
@@ -57,9 +63,8 @@ function addContacts() {
     containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
         e.preventDefault();
-        let nome = document.querySelector("#nomeContact").value;
-        let ddd = document.querySelector("#dddContact").value;
-        let numberContact = document.querySelector("#numContact").value;
+        let nome = document.querySelector(".nomeContact").value;
+        let numberContact = document.querySelector(".numContact").value;
         let img = li.querySelector("img");
         let file = event.target[0].files[0];
         let ramdom = (Math.random() * 100).toFixed(0);
@@ -73,9 +78,6 @@ function addContacts() {
         if (nome != "") {
             li.querySelector("h3").textContent = nome;
         }
-
-        li.querySelector("#ddd").textContent = ddd;
-
         li.querySelector("#numberContact").textContent = numberContact;
 
         form.reset();
@@ -102,22 +104,68 @@ function deleta() {
     }
 }
 
-editar.onclick = editContacts;
-function editContacts() {
-    for (const i of contacts) {
-        i.addEventListener("click", edit);
+editar.onclick = () => {
+    if (editar.parentElement.childNodes[9]) {
+        editar.parentElement.childNodes[9].remove();
+        removeListener(edit, true);
+    } else {
+        for (const i of contacts) {
+            i.addEventListener("click", edit);
+        }
     }
-}
+};
 
 function edit() {
-    if (event.target.contentEditable === "inherit") {
-        event.target.contentEditable = true;
-    }
-    event.target.addEventListener("focusout", () => {
-        event.target.contentEditable = "inherit";
-    });
+    // removeListener(edit, true);
 
-    removeListener(edit);
+    const container = document.querySelector(".container-form").cloneNode(true);
+    const formEdit = container.childNodes[1];
+    editar.parentElement.childNodes[9]
+        ? editar.parentElement.childNodes[9].replaceWith(container)
+        : editar.parentElement.appendChild(container);
+    container.classList.toggle("visible");
+
+    const contactInfoOnForm =
+        event.currentTarget.firstElementChild.lastElementChild;
+
+    let img = event.currentTarget.firstElementChild.firstElementChild;
+    let beforename = contactInfoOnForm.firstElementChild;
+    let beforetel = contactInfoOnForm.lastElementChild;
+    beforetel.classList = "editTelForm";
+
+    let name, tel, botao;
+
+    formEdit.childNodes.forEach((item) => {
+        if (item?.nextSibling?.classList?.contains("nomeContact")) {
+            return (name = item.nextSibling);
+        }
+        if (item?.nextSibling?.classList?.contains("numContact")) {
+            return (tel = item.nextSibling);
+        }
+        if (item?.nextSibling?.classList?.contains("botao")) {
+            return (botao = item.nextSibling);
+        }
+    });
+    formEdit[0] = img.src;
+    name.value = beforename.textContent;
+    tel.value = beforetel.textContent;
+    botao.innerHTML = "Alterar";
+
+    formEdit.onsubmit = (e) => {
+        e.preventDefault();
+
+        if (!name.value) {
+            return e.cancelBubble;
+        }
+        if (tel.value.length !== 15) {
+            e.cancelBubble;
+            return tel.setCustomValidity("You gotta fill this out, yo!");
+        }
+
+        container.remove();
+        console.log("oi");
+        removeListener(edit, true);
+    };
 }
 
 function removeListener(funcao) {
