@@ -59,6 +59,7 @@ adicionar.addEventListener("click", addContacts);
 function addContacts() {
     const li = document.querySelector(".list-wrapper li").cloneNode(true);
     const add = document.querySelector(".list-wrapper ul");
+    MaskInput("numContact");
 
     containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
@@ -116,22 +117,19 @@ editar.onclick = () => {
 };
 
 function edit() {
-    // removeListener(edit, true);
-
+    //criar formulario para editar
     const container = document.querySelector(".container-form").cloneNode(true);
     const formEdit = container.childNodes[1];
     editar.parentElement.childNodes[9]
         ? editar.parentElement.childNodes[9].replaceWith(container)
         : editar.parentElement.appendChild(container);
     container.classList.toggle("visible");
-
+    //////
     const contactInfoOnForm =
         event.currentTarget.firstElementChild.lastElementChild;
 
-    let img = event.currentTarget.firstElementChild.firstElementChild;
-    let beforename = contactInfoOnForm.firstElementChild;
-    let beforetel = contactInfoOnForm.lastElementChild;
-    beforetel.classList = "editTelForm";
+    let beforeName = contactInfoOnForm.firstElementChild;
+    let beforeTel = contactInfoOnForm.lastElementChild;
 
     let name, tel, botao;
 
@@ -146,24 +144,39 @@ function edit() {
             return (botao = item.nextSibling);
         }
     });
-    formEdit[0] = img.src;
-    name.value = beforename.textContent;
-    tel.value = beforetel.textContent;
-    botao.innerHTML = "Alterar";
+    tel.classList.add("editTelForm");
+    MaskInput("editTelForm");
 
+    name.value = beforeName.textContent;
+    tel.value = beforeTel.textContent;
+    botao.innerHTML = "Alterar";
+    let contato = event.currentTarget;
+
+    console.log(contato);
     formEdit.onsubmit = (e) => {
         e.preventDefault();
+        let file = event.target[0].files[0];
+        let img = formEdit[0];
+        img = file
+            ? createFileReader(img, file)
+            : e.currentTarget.firstElementChild.firstElementChild;
 
         if (!name.value) {
-            return e.cancelBubble;
+            e.cancelBubble;
+            setTimeout(() => {
+                name.setCustomValidity("");
+            }, 3000);
+            return name.setCustomValidity("Preencha o nome do contato ");
         }
         if (tel.value.length !== 15) {
             e.cancelBubble;
-            return tel.setCustomValidity("You gotta fill this out, yo!");
+            setTimeout(() => {
+                tel.setCustomValidity("");
+            }, 3000);
+            return tel.setCustomValidity("Preencha o número completo");
         }
 
         container.remove();
-        console.log("oi");
         removeListener(edit, true);
     };
 }
