@@ -64,10 +64,10 @@ function addContacts() {
     containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
         e.preventDefault();
-        let nome = document.querySelector(".nomeContact").value;
-        let numberContact = document.querySelector(".numContact").value;
+        let nome = document.querySelector(".nomeContact");
+        let numberContact = document.querySelector(".numContact");
         let img = li.querySelector("img");
-        let file = event.target[0].files[0];
+        let file = e.target[0].files[0];
         let ramdom = (Math.random() * 100).toFixed(0);
 
         const gender = e.currentTarget[1].checked ? "men" : "women";
@@ -76,10 +76,24 @@ function addContacts() {
             ? createFileReader(img, file)
             : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
 
-        if (nome != "") {
-            li.querySelector("h3").textContent = nome;
+        if (!nome.value) {
+            e.cancelBubble;
+            setTimeout(() => {
+                nome.setCustomValidity("");
+            }, 3000);
+            return nome.setCustomValidity("Preencha o nome do contato ");
         }
-        li.querySelector("#numberContact").textContent = numberContact;
+        if (numberContact.value.length !== 15) {
+            e.cancelBubble;
+            setTimeout(() => {
+                numberContact.setCustomValidity("");
+            }, 3000);
+            return numberContact.setCustomValidity(
+                "Preencha o número completo",
+            );
+        }
+        li.querySelector("h3").textContent = nome.value;
+        li.querySelector("#numberContact").textContent = numberContact.value;
 
         form.reset();
         add.appendChild(li);
@@ -96,27 +110,7 @@ function deleteContacts() {
     }
 }
 
-function deleta() {
-    if (confirm("Gostaria de deletar este contato?")) {
-        event.currentTarget.remove();
-        removeListener(deleta);
-        renderListContacts();
-        contacts = document.querySelectorAll(".list-wrapper li");
-    }
-}
-
-editar.onclick = () => {
-    if (editar.parentElement.childNodes[9]) {
-        editar.parentElement.childNodes[9].remove();
-        removeListener(edit, true);
-    } else {
-        for (const i of contacts) {
-            i.addEventListener("click", edit);
-        }
-    }
-};
-
-function edit() {
+function edit(e) {
     //criar formulario para editar
     const container = document.querySelector(".container-form").cloneNode(true);
     const formEdit = container.childNodes[1];
@@ -125,15 +119,19 @@ function edit() {
         : editar.parentElement.appendChild(container);
     container.classList.toggle("visible");
     //////
-    const contactInfoOnForm =
-        event.currentTarget.firstElementChild.lastElementChild;
 
+    const contactInfoOnForm =
+        e.currentTarget.firstElementChild.lastElementChild;
     let beforeName = contactInfoOnForm.firstElementChild;
     let beforeTel = contactInfoOnForm.lastElementChild;
+    let beforeImg = contactInfoOnForm.parentElement.firstElementChild;
 
-    let name, tel, botao;
+    let name, tel, botao, img;
 
     formEdit.childNodes.forEach((item) => {
+        if (item?.nextSibling?.classList?.contains("fotoContact")) {
+            return (img = item.nextSibling);
+        }
         if (item?.nextSibling?.classList?.contains("nomeContact")) {
             return (name = item.nextSibling);
         }
@@ -150,16 +148,12 @@ function edit() {
     name.value = beforeName.textContent;
     tel.value = beforeTel.textContent;
     botao.innerHTML = "Alterar";
-    let contato = event.currentTarget;
 
-    console.log(contato);
     formEdit.onsubmit = (e) => {
         e.preventDefault();
-        let file = event.target[0].files[0];
-        let img = formEdit[0];
-        img = file
-            ? createFileReader(img, file)
-            : e.currentTarget.firstElementChild.firstElementChild;
+
+        let file = e.target[0].files[0];
+        img.src = file ? createFileReader(img, file) : beforeImg.src;
 
         if (!name.value) {
             e.cancelBubble;
@@ -180,6 +174,26 @@ function edit() {
         removeListener(edit, true);
     };
 }
+
+function deleta(e) {
+    if (confirm("Gostaria de deletar este contato?")) {
+        e.currentTarget.remove();
+        removeListener(deleta);
+        renderListContacts();
+        contacts = document.querySelectorAll(".list-wrapper li");
+    }
+}
+
+editar.onclick = () => {
+    if (editar.parentElement.childNodes[9]) {
+        editar.parentElement.childNodes[9].remove();
+        removeListener(edit, true);
+    } else {
+        for (const i of contacts) {
+            i.addEventListener("click", edit);
+        }
+    }
+};
 
 function removeListener(funcao) {
     for (const index of contacts) {
