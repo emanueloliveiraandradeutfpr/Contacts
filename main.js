@@ -109,7 +109,16 @@ function deleteContacts() {
         i.addEventListener("click", deleta);
     }
 }
-
+editar.onclick = () => {
+    if (editar.parentElement.childNodes[9]) {
+        editar.parentElement.childNodes[9].remove();
+        removeListener(edit, true);
+    } else {
+        for (const i of contacts) {
+            i.addEventListener("click", edit);
+        }
+    }
+};
 function edit(e) {
     //criar formulario para editar
     const container = document.querySelector(".container-form").cloneNode(true);
@@ -156,14 +165,12 @@ function edit(e) {
         img.src = file ? createFileReader(img, file) : beforeImg.src;
 
         if (!name.value) {
-            e.cancelBubble;
             setTimeout(() => {
                 name.setCustomValidity("");
             }, 3000);
             return name.setCustomValidity("Preencha o nome do contato ");
         }
         if (tel.value.length !== 15) {
-            e.cancelBubble;
             setTimeout(() => {
                 tel.setCustomValidity("");
             }, 3000);
@@ -183,17 +190,6 @@ function deleta(e) {
         contacts = document.querySelectorAll(".list-wrapper li");
     }
 }
-
-editar.onclick = () => {
-    if (editar.parentElement.childNodes[9]) {
-        editar.parentElement.childNodes[9].remove();
-        removeListener(edit, true);
-    } else {
-        for (const i of contacts) {
-            i.addEventListener("click", edit);
-        }
-    }
-};
 
 function removeListener(funcao) {
     for (const index of contacts) {
