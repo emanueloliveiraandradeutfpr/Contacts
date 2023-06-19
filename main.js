@@ -57,24 +57,19 @@ function renderListContacts() {
 }
 adicionar.addEventListener("click", addContacts);
 function addContacts() {
-    const li = document.querySelector(".list-wrapper li").cloneNode(true);
     const add = document.querySelector(".list-wrapper ul");
-    MaskInput("numContact");
+
+    let numberContact = document.querySelector(".numContact");
+    MaskInput(".numContact");
+    mask.updateValue();
 
     containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
         e.preventDefault();
         let nome = document.querySelector(".nomeContact");
-        let numberContact = document.querySelector(".numContact");
-        let img = li.querySelector("img");
+
         let file = e.target[0].files[0];
-        let ramdom = (Math.random() * 100).toFixed(0);
-
         const gender = e.currentTarget[1].checked ? "men" : "women";
-
-        file
-            ? createFileReader(img, file)
-            : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
 
         if (!nome.value) {
             e.cancelBubble;
@@ -92,23 +87,17 @@ function addContacts() {
                 "Preencha o número completo",
             );
         }
-        li.querySelector("h3").textContent = nome.value;
-        li.querySelector("#numberContact").textContent = numberContact.value;
+
+        let li = createComponent(file, gender, nome, numberContact);
+        add.appendChild(li);
 
         form.reset();
-        add.appendChild(li);
         containerForm.classList.toggle("visible");
         contacts = document.querySelectorAll(".list-wrapper li");
+        mask.value = "";
     };
 }
 
-deletar.onclick = deleteContacts;
-
-function deleteContacts() {
-    for (const i of contacts) {
-        i.addEventListener("click", deleta);
-    }
-}
 editar.onclick = () => {
     if (editar.parentElement.childNodes[9]) {
         editar.parentElement.childNodes[9].remove();
@@ -129,6 +118,7 @@ function edit(e) {
     container.classList.toggle("visible");
     //////
 
+    let beforeContact = e.currentTarget;
     const contactInfoOnForm =
         e.currentTarget.firstElementChild.lastElementChild;
     let beforeName = contactInfoOnForm.firstElementChild;
@@ -152,7 +142,7 @@ function edit(e) {
         }
     });
     tel.classList.add("editTelForm");
-    MaskInput("editTelForm");
+    MaskInput(".editTelForm");
 
     name.value = beforeName.textContent;
     tel.value = beforeTel.textContent;
@@ -162,7 +152,7 @@ function edit(e) {
         e.preventDefault();
 
         let file = e.target[0].files[0];
-        img.src = file ? createFileReader(img, file) : beforeImg.src;
+        file ? (file = file) : (file = beforeImg.src);
 
         if (!name.value) {
             setTimeout(() => {
@@ -177,11 +167,22 @@ function edit(e) {
             return tel.setCustomValidity("Preencha o número completo");
         }
 
+        const contactEditad = createComponent(file, "", name, tel);
+        beforeContact.replaceWith(contactEditad);
+        contacts = document.querySelectorAll(".list-wrapper li");
+
         container.remove();
         removeListener(edit, true);
     };
 }
 
+deletar.onclick = selectDeleteContacts;
+
+function selectDeleteContacts() {
+    for (const i of contacts) {
+        i.addEventListener("click", deleta);
+    }
+}
 function deleta(e) {
     if (confirm("Gostaria de deletar este contato?")) {
         e.currentTarget.remove();
@@ -190,7 +191,6 @@ function deleta(e) {
         contacts = document.querySelectorAll(".list-wrapper li");
     }
 }
-
 function removeListener(funcao) {
     for (const index of contacts) {
         index.removeEventListener("click", funcao, false);
@@ -205,4 +205,40 @@ function createFileReader(img, file) {
         img.src = readerTarget.result;
     });
     reader.readAsDataURL(file);
+}
+
+function createComponent(file, gender, nome, number) {
+    const li = document.querySelector(".list-wrapper li").cloneNode(true);
+    let img = li.querySelector("img");
+
+    let ramdom = Number((Math.random() * 100).toFixed(0));
+    console.log(typeof file);
+    if (typeof file === "object") {
+        file
+            ? createFileReader(img, file)
+            : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
+    }
+    if (typeof file === "string") {
+        img.src = file;
+    }
+
+    li.querySelector("h3").textContent = nome.value;
+    li.querySelector("#numberContact").textContent = number.value;
+
+    return li;
+}
+let mask = null;
+function MaskInput(numContact) {
+    const input = document.querySelector(numContact);
+    mask = IMask(input, {
+        mask: "{(}DDD{)} 00000{-}0000",
+        blocks: {
+            DDD: {
+                mask: IMask.MaskedRange,
+                from: 11,
+                to: 99,
+            },
+        },
+    });
+    mask.value = "";
 }
