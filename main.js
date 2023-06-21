@@ -12,15 +12,15 @@ filter.addEventListener("keyup", filterContacts);
 function filterContacts() {
     if (filter.value !== "") {
         for (let contact of contacts) {
-            let keySearchByName = contact.querySelector("h3");
-            keySearchByName = keySearchByName.textContent.toLowerCase();
-            let keySearchByNumber = contact.querySelector("p");
-            keySearchByNumber = keySearchByNumber.textContent.toLowerCase();
+            let keySearchByName = contact?.querySelector("h3");
+            keySearchByName = keySearchByName?.textContent?.toLowerCase();
+            let keySearchByNumber = contact?.querySelector("p");
+            keySearchByNumber = keySearchByNumber?.textContent?.toLowerCase();
 
-            let filterText = filter.value.toLowerCase().trim();
+            let filterText = filter?.value?.toLowerCase().trim();
             if (
-                !keySearchByName.includes(filterText) &&
-                !keySearchByNumber.includes(filterText)
+                !keySearchByName?.includes(filterText) &&
+                !keySearchByNumber?.includes(filterText)
             ) {
                 contact.style.display = "none";
             } else {
@@ -35,6 +35,7 @@ function filterContacts() {
         renderListContacts();
     }
     contacts = document.querySelectorAll(".list-wrapper li");
+    ordenateContacts();
 }
 
 function renderListContacts() {
@@ -53,6 +54,30 @@ function renderListContacts() {
                 letter.style.display = "flex";
             }
         }
+    }
+}
+
+function ordenateContacts() {
+    for (const item of letters) {
+        let contacts = [item.children[1].childElementCount];
+        let name = item.querySelectorAll("h3");
+        name.forEach((item, index) => {
+            contacts[index] = item;
+        });
+        contacts.sort(function (a, b) {
+            if (a.textContent.localeCompare(b.textContent) < 0) {
+                return -1;
+            } else if (a.textContent.localeCompare(b.textContent) > 0) {
+                return 1;
+            }
+
+            return 0;
+        });
+        let contato = contacts.map((e) => {
+            return e.parentElement.parentElement;
+        });
+        item.children[1].replaceChildren(...contato);
+        contacts = document.querySelectorAll(".list-wrapper li");
     }
 }
 adicionar.addEventListener("click", addContacts);
@@ -212,8 +237,7 @@ function createComponent(file, gender, nome, number) {
     let img = li.querySelector("img");
 
     let ramdom = Number((Math.random() * 100).toFixed(0));
-    console.log(typeof file);
-    if (typeof file === "object") {
+    if (typeof file === "object" || typeof file === "undefined") {
         file
             ? createFileReader(img, file)
             : (img.src = `https://randomuser.me/api/portraits/${gender}/${ramdom}.jpg`);
