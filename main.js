@@ -32,6 +32,7 @@ function filterContacts() {
         for (let contact of contacts) {
             contact.style.display = "flex";
         }
+        ordenateLetter();
         renderListContacts();
     }
     ordenateContacts();
@@ -57,6 +58,30 @@ function renderListContacts() {
     }
 }
 
+function ordenateLetters() {
+    let letras = document.querySelectorAll(".letter");
+    let list = [];
+    console.log(1 + 1);
+    letras.forEach((item, index) => {
+        list[index] = item;
+    });
+    list.sort(function (a, b) {
+        if (a.textContent.localeCompare(b.textContent) < 0) {
+            return -1;
+        } else if (a.textContent.localeCompare(b.textContent) > 0) {
+            return 1;
+        }
+
+        return 0;
+    });
+
+    letters.forEach((e, index) => {
+        if (e !== list[index].parentElement) {
+            e.replaceChildren(list[index].parentElement, true);
+        } else return;
+    });
+}
+
 function ordenateContacts() {
     for (const item of letters) {
         let list = [item.children[1].childElementCount];
@@ -79,6 +104,7 @@ function ordenateContacts() {
         item.children[1].replaceChildren(...contato);
     }
 }
+
 adicionar.addEventListener("click", addContacts);
 function addContacts() {
     const add = document.querySelector(".list-wrapper ul");
