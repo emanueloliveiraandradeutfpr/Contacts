@@ -27,14 +27,13 @@ function filterContacts() {
                 contact.style.display = "flex";
             }
         }
-        renderListContacts();
     } else {
         for (let contact of contacts) {
             contact.style.display = "flex";
         }
-        ordenateLetter();
-        renderListContacts();
     }
+    ordenateLetters();
+    renderListContacts();
     ordenateContacts();
     contacts = document.querySelectorAll(".list-wrapper li");
 }
