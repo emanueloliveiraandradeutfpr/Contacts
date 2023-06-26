@@ -19,9 +19,11 @@
     <header class="container">
         <nav class="flex itens-center">
             <h2>Meus contatos</h2>
-            <ul class="flex itens-center">
+            <ul class="headerContainer flex itens-center">
                 <li id="add">
-                    <ion-icon name="add"></ion-icon>
+                    <button>
+                        <ion-icon name="add"></ion-icon>
+                    </button>
                 </li>
                 <div class="container-form visible">
                     <form class="addContact ">
@@ -34,7 +36,7 @@
                         </div>
                         <input type="text" class="nomeContact" placeholder="Nome do contato" autocomplete="off"
                             autofocus>
-                        <input type="tel" class="numContact" placeholder="Número de telefone" maxlength="15"
+                        <input type="tel" class="numContact" placeholder="Número de telefone" maxlength="17"
                             autocomplete="off">
 
                         <button class="botao">Adicionar</button>
@@ -42,10 +44,14 @@
                 </div>
 
                 <li id="pencil">
-                    <ion-icon name="pencil"></ion-icon>
+                    <button>
+                        <ion-icon name="pencil"></ion-icon>
+                    </button>
                 </li>
                 <li id="trash">
-                    <ion-icon name="trash"></ion-icon>
+                    <button>
+                        <ion-icon name="trash"></ion-icon>
+                    </button>
                 </li>
             </ul>
         </nav>
