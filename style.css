@@ -30,7 +30,19 @@ body {
 
 header {
     background-color: #16151E;
+}
 
+header h2 {
+    font-size: 20px;
+    line-height: 23px;
+}
+
+.headerContainer button {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #E1E1E6;
+    cursor: pointer;
 }
 
 .container-form {
@@ -69,7 +81,9 @@ header {
 .addContact button {
     padding: 10px;
     border-radius: 10px;
-    background-color: #8C9CBA;
+    background: #8c9cba91;
+    color: #211f2e;
+    border: inherit;
 }
 
 .addContact button:hover {
@@ -87,11 +101,6 @@ header {
 
 .itens-center {
     align-items: center;
-}
-
-header h2 {
-    font-size: 20px;
-    line-height: 23px;
 }
 
 nav {
