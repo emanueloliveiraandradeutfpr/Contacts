@@ -30,19 +30,7 @@ body {
 
 header {
     background-color: #16151E;
-}
 
-header h2 {
-    font-size: 20px;
-    line-height: 23px;
-}
-
-.headerContainer button {
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    color: #E1E1E6;
-    cursor: pointer;
 }
 
 .container-form {
@@ -101,6 +89,11 @@ header h2 {
 
 .itens-center {
     align-items: center;
+}
+
+header h2 {
+    font-size: 20px;
+    line-height: 23px;
 }
 
 nav {
