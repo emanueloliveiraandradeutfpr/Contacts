@@ -1,5 +1,5 @@
 const filter = document.querySelector(".input-wrapper input");
-const letters = document.querySelectorAll(".list-wrapper");
+let letters = document.querySelectorAll(".list-wrapper");
 let contacts = document.querySelectorAll(".list-wrapper li");
 const containerForm = document.querySelector(".container-form");
 const form = document.querySelector(".addContact");
@@ -32,9 +32,9 @@ function filterContacts() {
             contact.style.display = "flex";
         }
     }
+    ordenateContacts();
     ordenateLetters();
     renderListContacts();
-    ordenateContacts();
     contacts = document.querySelectorAll(".list-wrapper li");
 }
 
@@ -60,7 +60,6 @@ function renderListContacts() {
 function ordenateLetters() {
     let letras = document.querySelectorAll(".letter");
     let list = [];
-    console.log(1 + 1);
     letras.forEach((item, index) => {
         list[index] = item;
     });
@@ -98,7 +97,7 @@ function ordenateContacts() {
             return 0;
         });
         let contato = list.map((e) => {
-            return e.parentElement.parentElement.parentElement;
+            return e?.parentElement?.parentElement?.parentElement;
         });
         item.children[1].replaceChildren(...contato);
     }
@@ -138,12 +137,30 @@ function addContacts() {
         }
 
         let li = createComponent(file, gender, nome, numberContact);
-        add.appendChild(li);
+        let firstLetterOfName = nome.value.charAt(0).toUpperCase();
+        for (const [key, value] of Object.entries(letters)) {
+            if (value.firstElementChild.innerHTML === firstLetterOfName) {
+                letters[key].children[1].appendChild(li);
+                break;
+            } else if (key == letters.length - 1) {
+                let ListaContatos = document.querySelector(".contacts");
+                let ramdom = ((Math.random() * 10) / 2).toFixed(0);
+                let aux = letters[ramdom].cloneNode(true);
+                aux.firstElementChild.innerHTML = firstLetterOfName;
+                aux.lastElementChild.children[0].replaceWith(li);
+
+                ListaContatos.appendChild(aux);
+            }
+        }
 
         form.reset();
         containerForm.classList.toggle("visible");
         contacts = document.querySelectorAll(".list-wrapper li");
+        letters = document.querySelectorAll(".list-wrapper");
+
         mask.value = "";
+        ordenateContacts();
+        ordenateLetters();
     };
 }
 
