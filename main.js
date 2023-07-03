@@ -42,7 +42,7 @@ function renderListContacts() {
     for (const letter of letters) {
         let cont = 0;
         if (letter.lastElementChild.childElementCount === 0) {
-            letter.style.display = "none";
+            letter.remove();
         }
         for (const iterator of letter.lastElementChild.children) {
             if (iterator.style.display == "none") {
@@ -75,7 +75,7 @@ function ordenateLetters() {
 
     letters.forEach((e, index) => {
         if (e !== list[index].parentElement) {
-            e.replaceChildren(list[index].parentElement, true);
+            e.replaceChildren(list[index].parentElement);
         } else return;
     });
 }
@@ -109,7 +109,6 @@ function addContacts() {
 
     let numberContact = document.querySelector(".numContact");
     MaskInput(".numContact");
-    mask.updateValue();
 
     containerForm.classList.toggle("visible");
     form.onsubmit = (e) => {
@@ -142,10 +141,10 @@ function addContacts() {
             if (value.firstElementChild.innerHTML === firstLetterOfName) {
                 letters[key].children[1].appendChild(li);
                 break;
-            } else if (key == letters.length - 1) {
+            } else if (Number(key) === letters.length - 1) {
                 let ListaContatos = document.querySelector(".contacts");
-                let ramdom = ((Math.random() * 10) / 2).toFixed(0);
-                let aux = letters[ramdom].cloneNode(true);
+                let aux = letters[1].cloneNode(true);
+                pickUpColor(aux);
                 aux.firstElementChild.innerHTML = firstLetterOfName;
                 aux.lastElementChild.children[0].replaceWith(li);
 
@@ -159,6 +158,7 @@ function addContacts() {
         letters = document.querySelectorAll(".list-wrapper");
 
         mask.value = "";
+        mask.updateValue();
         ordenateContacts();
         ordenateLetters();
     };
@@ -252,9 +252,10 @@ function selectDeleteContacts() {
 function deleta(e) {
     if (confirm("Gostaria de deletar este contato?")) {
         e.currentTarget.remove();
+        letters = document.querySelectorAll(".list-wrapper");
+        contacts = document.querySelectorAll(".list-wrapper li");
         removeListener(deleta);
         renderListContacts();
-        contacts = document.querySelectorAll(".list-wrapper li");
     }
 }
 function removeListener(funcao) {
@@ -306,4 +307,22 @@ function MaskInput(numContact) {
         },
     });
     mask.value = "";
+}
+
+function pickUpColor(elemento) {
+    let ramdom = Math.floor((Math.random() * 10) / 2).toFixed(0);
+    if (ramdom === "0") {
+        return elemento.classList.add(".purple");
+    }
+    if (ramdom === "1") {
+        return elemento.classList.add(".green");
+    }
+    if (ramdom === "2") {
+        return elemento.classList.add(".pink");
+    }
+    if (ramdom === "3") {
+        return elemento.classList.add(".blue");
+    }
+
+    return elemento.classList.add(".yellow");
 }

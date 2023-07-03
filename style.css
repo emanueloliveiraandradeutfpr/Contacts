@@ -26,6 +26,7 @@ ul {
 body {
     color: #E1E1E6;
     background-color: #1A1924;
+    margin-bottom: 20px;
 }
 
 header {
@@ -257,17 +258,17 @@ form {
     gap: 32px;
 }
 
-#add:active {
+#add button:active {
     animation: scale .15s ease-in;
     color: green;
 }
 
-#pencil:active {
+#pencil button:active {
     animation: scale .18s ease-in;
     color: yellow;
 }
 
-#trash:active {
+#trash button:active {
     animation: scale .15s ease-in;
     color: red;
 }
