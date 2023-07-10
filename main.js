@@ -320,17 +320,17 @@ function MaskInput(numContact) {
 function pickUpColor(elemento) {
     let ramdom = Math.floor((Math.random() * 10) / 2).toFixed(0);
     if (ramdom === "0") {
-        return elemento.classList.add(".purple");
+        return (elemento.classList = "letter purple");
     }
     if (ramdom === "1") {
-        return elemento.classList.add(".green");
+        return (elemento.classList = "letter green");
     }
     if (ramdom === "2") {
-        return elemento.classList.add(".pink");
+        return (elemento.classList = "letter pink");
     }
     if (ramdom === "3") {
-        return elemento.classList.add(".blue");
+        return (elemento.classList = "letter blue");
     }
 
-    return elemento.classList.add(".yellow");
+    return (elemento.classList = "letter yellow");
 }
