@@ -260,10 +260,10 @@ function selectDeleteContacts() {
 function deleta(e) {
     if (confirm("Gostaria de deletar este contato?")) {
         e.currentTarget.remove();
+        renderListContacts();
+        removeListener(deleta);
         letters = document.querySelectorAll(".list-wrapper");
         contacts = document.querySelectorAll(".list-wrapper li");
-        removeListener(deleta);
-        renderListContacts();
     }
 }
 function removeListener(funcao) {
