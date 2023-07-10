@@ -63,21 +63,24 @@ function ordenateLetters() {
     letras.forEach((item, index) => {
         list[index] = item;
     });
+    let isChanged = false;
     list.sort(function (a, b) {
         if (a.textContent.localeCompare(b.textContent) < 0) {
+            isChanged = true;
             return -1;
         } else if (a.textContent.localeCompare(b.textContent) > 0) {
             return 1;
         }
-
         return 0;
     });
-
-    letters.forEach((e, index) => {
-        if (e !== list[index].parentElement) {
-            e.replaceChildren(list[index].parentElement);
-        } else return;
-    });
+    if (isChanged) {
+        let letras = list.map((e) => {
+            return e?.parentElement;
+        });
+        letters.forEach((e) => {
+            e?.parentElement.replaceChildren(...letras);
+        });
+    }
 }
 
 function ordenateContacts() {
@@ -87,8 +90,11 @@ function ordenateContacts() {
         name.forEach((item, index) => {
             list[index] = item;
         });
+        let isChanged = false;
+
         list.sort(function (a, b) {
             if (a.textContent.localeCompare(b.textContent) < 0) {
+                isChanged = true;
                 return -1;
             } else if (a.textContent.localeCompare(b.textContent) > 0) {
                 return 1;
@@ -96,10 +102,12 @@ function ordenateContacts() {
 
             return 0;
         });
-        let contato = list.map((e) => {
-            return e?.parentElement?.parentElement?.parentElement;
-        });
-        item.children[1].replaceChildren(...contato);
+        if (isChanged) {
+            let contato = list.map((e) => {
+                return e?.parentElement?.parentElement?.parentElement;
+            });
+            item.children[1].replaceChildren(...contato);
+        }
     }
 }
 
