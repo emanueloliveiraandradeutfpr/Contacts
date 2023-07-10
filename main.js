@@ -152,9 +152,9 @@ function addContacts() {
             } else if (Number(key) === letters.length - 1) {
                 let ListaContatos = document.querySelector(".contacts");
                 let aux = letters[1].cloneNode(true);
-                pickUpColor(aux);
+                pickUpColor(aux.firstElementChild);
                 aux.firstElementChild.innerHTML = firstLetterOfName;
-                aux.lastElementChild.children[0].replaceWith(li);
+                aux.lastElementChild.replaceChildren(li);
 
                 ListaContatos.appendChild(aux);
             }
